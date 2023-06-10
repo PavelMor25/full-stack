@@ -163,3 +163,43 @@ if (window.NodeList && !NodeList.prototype.forEach) {
         }
     };
 }
+
+// VALIDATION
+
+function checkEmail(text) {
+    return (text || '').match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+}
+
+function checkPhone(text) {
+    return (text || '').match(/\d{12}/) && text.length === 12
+}
+
+function validator(data) {
+    let all_right = []
+    for (let prop in data) {
+        switch (prop) {
+            case 'first_name':
+                if (!data[prop] || data[prop].match(/\d/)) {
+                    all_right.push('First name')
+                }
+                break;
+            case 'last_name':
+                if (!data[prop] || data[prop].match(/\d/)) {
+                    all_right.push('Last name')
+                }
+                break;
+            case 'phone':
+                if (!checkPhone(data.phone)) {
+                    all_right.push('Phone')
+                }
+                break;
+            case 'email':
+                if (!checkEmail(data.email)) {
+                    all_right.push('Email')
+                }
+                break;
+        }
+    }
+    return all_right;
+}
+
